@@ -16,6 +16,8 @@ jobs:
       - name: Run tests
         run: npm test
   deploy:
+    # the test & deploy jobs will be working in isolate environments. therefore, we need to checkout to repo & install dependencies again in this job again.
+    # these both jobs will run parallel, independent of each other.
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
