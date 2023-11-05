@@ -1,9 +1,9 @@
-name: Output Information
-on: push
 # This workflow is to explore the github action context, and github action expression
+name: Output information
+on: workflow_dispatch
 jobs:
-    info: 
-     runs-on: ubuntu-latest
-     steps:
-        - name: Output GitHub context
-          run: echo "${{toJson(github)}}"
+  info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output GitHub context
+        run: echo "${{ toJSON(github) }}"
