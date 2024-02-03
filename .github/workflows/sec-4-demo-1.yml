@@ -1,0 +1,32 @@
+name: Section 4 Demo 1
+# This workflow can be triggered on opening pull request, any push on mentioned branches, or dispatched on demand
+on: 
+    pull_request: 
+        types: 
+            - opened
+    # to add event without types, just declare its identifier along with : sign. No need to add its types below
+    workflow_dispatch: 
+    push:
+        branches: 
+            - sec-04
+            - 'dev-*' # all the branch names starting with 'dev-' without slashes e.g. dev-new, dev-this-is-new
+            - 'feat/**' # ** means all the branch names even if they include more than 1 slashes e.g. feath/new, feat/new/button
+        # do not run the workflow if any of the file is changed of which path is mentioned in paths-ignore list
+        paths-ignore:
+            - '.github/workflows/*'
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Output event data
+              run: echo "${{toJson(github.event)}}"
+            - name: Get code
+              uses: actions/checkout@v3
+            - name: Install dependencies
+              run: npm ci
+            - name: Test code
+              run: npm run test
+            - name: Build code
+              run: npm run build
+            - name: Deploy project
+              run: echo "Deploying..."
