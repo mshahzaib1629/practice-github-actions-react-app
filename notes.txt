@@ -1,0 +1,2 @@
+- Only job name is identifier is not reserved, remaining all the identifiers in yml file are reserved.
+- Github Action Runners can be found at https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners
