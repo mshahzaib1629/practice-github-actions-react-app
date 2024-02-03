@@ -13,7 +13,7 @@ on:
             - 'feat/**' # ** means all the branch names even if they include more than 1 slashes e.g. feath/new, feat/new/button
         # do not run the workflow if any of the file is changed of which path is mentioned in paths-ignore list
         paths-ignore:
-            - './.github/workflows/*'
+            - '.github/workflows/*'
 jobs:
     deploy:
         runs-on: ubuntu-latest
