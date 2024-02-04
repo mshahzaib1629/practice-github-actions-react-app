@@ -1,4 +1,4 @@
-name: Deploy website
+name: Sec-05 Upload/Download Artifacts
 on:
   push:
     branches:

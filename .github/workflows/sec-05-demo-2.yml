@@ -1,0 +1,62 @@
+name: Sec-05 Job Outputs
+on:
+  push:
+    branches:
+      - sec-05
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm ci
+      - name: Test code
+        run: npm run test
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    outputs:
+      # we have to declare all the output identifiers (variables) which will be used in current job before writing its steps
+      script-file: ${{ steps.publish.outputs.script-file }} # this identifier name is upto you, we'll use this identifier to store some value in this job
+      # steps is a context object, it contains the information about the steps that have been run in the current job
+      # To learn more about context objects, visit https://docs.github.com/en/actions/learn-github-actions/contexts
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm ci
+      - name: Build website
+        run: npm run build
+      - name: Publish JS filename
+        id: publish
+        # ::set-output sets a Step Output, later that output is linked with a Job Output
+        run: find dist/assets/*.js -type f -execdir echo '::set-output name=script-file::{}' ';'
+        # its a linux command, used to get filename having extension .js
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with: 
+          # name is totally upto you, it can be used to retreive the artifacts in subesquent jobs
+          name: dist-files
+          # paths define where to find the files in repo that should be stored as artifacts
+          path: | # pipe "|" sign can be used to write instruction in multiple lines
+            dist
+          #  package.json
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Outputfilename
+      # needs context is used to access output from other jobs
+        run: echo ${{needs.build.outputs.script-file}}
+
+      - name: Get build artiacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-files
+      - name: Output contents
+        run: ls
+      - name: Deploy
+        run: echo "Deploying..."
