@@ -1,5 +1,9 @@
 name: Project Deployment
-on: [push, workflow_dispatch]
+# on: [push, workflow_dispatch]
+on:
+  push:
+    branches: 
+      - 3-practice-project
 jobs:
   lintCheck:
     runs-on: ubuntu-latest
