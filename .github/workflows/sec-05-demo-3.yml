@@ -12,7 +12,7 @@ jobs:
       
       # cached data can be accessible in other jobs
       # cache step must be before installing dependencies.
-      - name: Caching dependencies
+      - name: Cache dependencies
         uses: actions/cache@v3
         with:
           path: ~/.npm # path where npm pkgs will be installed and cached.
@@ -32,7 +32,7 @@ jobs:
       - name: Get code
         uses: actions/checkout@v3
 
-      - name: Caching dependencies
+      - name: Cache dependencies
         uses: actions/cache@v3
         with:
           path: ~/.npm # path where npm pkgs will be installed and cached.
@@ -60,13 +60,11 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: dist-files
-      - name: Caching dependencies
+      - name: Cache dependencies
         uses: actions/cache@v3
         with:
           path: ~/.npm # path where npm pkgs will be installed and cached.
           key: deps-node-modules-${{hashFiles('**/package-lock.json')}}
-            
-      - name: Output contents
-        run: ls
+      
       - name: Deploy
         run: echo "Deploying..."
