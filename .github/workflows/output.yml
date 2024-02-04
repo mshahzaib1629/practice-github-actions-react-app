@@ -1,6 +1,10 @@
 # This workflow is to explore the github action context, and github action expression
 name: Output information
-on: [workflow_dispatch, push]
+# on: [workflow_dispatch, push]
+on:
+  push:
+    branches: 
+      - 3.-GitHub-Actions---Basic-Building-Blocks-&-Components
 jobs:
   info:
     runs-on: ubuntu-latest

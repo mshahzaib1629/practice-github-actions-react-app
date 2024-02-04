@@ -1,5 +1,9 @@
 name: Deploy Project
-on: [push, workflow_dispatch]
+# on: [push, workflow_dispatch]
+on:
+  push:
+    branches: 
+      - 3.-GitHub-Actions---Basic-Building-Blocks-&-Components
 jobs:
   test:
     runs-on: ubuntu-latest
