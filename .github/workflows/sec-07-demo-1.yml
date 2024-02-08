@@ -77,7 +77,7 @@ jobs:
         run: ls
       - name: Deploy
         run: echo "Deploying..."
-    # lets make this job conditional, it'll only run once any of the depending jobs get failed
+  # lets make this job conditional, it'll only run once any of the depending jobs get failed
   report:
     needs: [deploy, lint]
     if: failure()
@@ -86,4 +86,4 @@ jobs:
       - name: Output Information
         run: |
           echo "Something went wrong!"
-          echo "${{ github }}"
+          echo "${{ toJSON(github) }}"
