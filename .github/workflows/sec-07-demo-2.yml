@@ -1,4 +1,4 @@
-name: Sec-07 Controlling Execution Workflow
+name: Sec-07 Controlling Steps based on Previous Step Outputs
 on:
   push:
     branches:
@@ -13,9 +13,11 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          path: ~/.npm
+          path: node_modules
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
+        # installing dependencies only if the cache is not already present
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Lint code
         run: npm run lint
@@ -28,9 +30,11 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          path: ~/.npm
+          path: node_modules
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
+        # installing dependencies only if the cache is not already present
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Test code
       # adding id to test step, so that it can be accessed in the next step(s)
