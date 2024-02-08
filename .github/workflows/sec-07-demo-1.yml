@@ -77,3 +77,13 @@ jobs:
         run: ls
       - name: Deploy
         run: echo "Deploying..."
+    # lets make this job conditional, it'll only run once any of the depending jobs get failed
+  report:
+    needs: [deploy, lint]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output Information
+        run: |
+          echo "Something went wrong!"
+          echo "${{ github }}"
