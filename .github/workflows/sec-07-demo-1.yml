@@ -33,8 +33,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Test code
+      # adding id to test step, so that it can be accessed in the next step(s)
+        id: test-code
         run: npm run test
       - name: Upload test report
+      # adding if condition. here failure() is a conditional function, that returns true if any of the previous jobs is failed
+        if: failure() && steps.test-code.outcome == 'failure'
         uses: actions/upload-artifact@v3
         with:
           name: test-report
